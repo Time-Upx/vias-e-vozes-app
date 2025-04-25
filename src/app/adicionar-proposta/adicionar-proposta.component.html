@@ -1,0 +1,54 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Adicionar Proposta</h2>
+    <form (ngSubmit)="onSubmit()" #proposalForm="ngForm">
+        <!-- Inserir imagem -->
+        <div class="mb-3">
+            <label for="imageUpload" class="form-label"><i class="bi bi-image me-2"></i>Inserir Imagem</label>
+            <input type="file" class="form-control" id="imageUpload" (change)="onFileSelected($event)"
+                accept="image/*" />
+        </div>
+        <div class="mb-3">
+            <img *ngIf="imagePreview" [src]="imagePreview" class="img-fluid"
+                style="max-width: 300px; border: 1px solid #ccc; border-radius: 5px;"
+                alt="Pré-visualização da Imagem" />
+        </div>
+
+        <!-- Nome completo -->
+        <div class="mb-3">
+            <label for="fullName" class="form-label"><i class="bi bi-person me-2"></i>Nome Completo</label>
+            <input type="text" class="form-control" id="fullName" name="fullName" ngModel required
+                placeholder="Digite seu nome completo" />
+        </div>
+
+        <!-- Idade -->
+        <div class="mb-3">
+            <label for="age" class="form-label"><i class="bi bi-calendar me-2"></i>Idade</label>
+            <input type="number" class="form-control" id="age" name="age" ngModel required
+                placeholder="Digite sua idade" />
+        </div>
+
+        <!-- Título do Problema -->
+        <div class="mb-3">
+            <label for="problemTitle" class="form-label"><i class="bi bi-chat-right-dots me-2"></i>Título do
+                Problema</label>
+            <input type="text" class="form-control" id="problemTitle" name="problemTitle" ngModel required
+                placeholder="Informe o título do problema" />
+        </div>
+
+        <!-- Descrição do Problema -->
+        <div class="mb-3">
+            <label for="problemDescription" class="form-label"><i class="bi bi-chat-left-text me-2"></i>Descrição do
+                Problema</label>
+            <textarea class="form-control" id="problemDescription" name="problemDescription" rows="4" ngModel required
+                placeholder="Descreva o problema em detalhes"></textarea>
+        </div>
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary me-2" (click)="clearForm(proposalForm)"><i
+                    class="bi bi-arrow-counterclockwise"></i> Limpar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!proposalForm.valid"><i class="bi bi-send"></i>
+                Enviar</button>
+        </div>
+    </form>
+</div>
