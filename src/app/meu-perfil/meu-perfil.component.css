@@ -1,0 +1,29 @@
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+textarea {
+    resize: none;
+}
+
+.btn-primary {
+    background-color: #6a11cb;
+    border-color: #6a11cb;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.border {
+    border-radius: 10px;
+}
+
+h5 {
+    color: #495057;
+}
+
+.display-6 {
+    font-weight: bold;
+}

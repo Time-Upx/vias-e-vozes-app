@@ -1,13 +1,39 @@
-.carousel img {
+.card {
     border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.list-group-item {
-    border-radius: 5px;
-    cursor: pointer;
+.card-img-top {
+    border-radius: 10px 10px 0 0;
 }
 
-.list-group-item:hover {
+.btn-primary {
     background-color: #6a11cb;
-    color: white;
+    border-color: #6a11cb;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.carousel-item,
+.carousel-inner {
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-item img {
+    object-fit: cover;
+}
+
+.carousel-indicators button {
+    background-color: #6a11cb;
+}
+
+h5 {
+    color: #495057;
+}
+
+p {
+    color: #6c757d;
 }

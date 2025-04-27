@@ -1,0 +1,31 @@
+.accordion-button {
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.accordion-button.collapsed {
+    background-color: #e9ecef;
+}
+
+.accordion-item {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.accordion-body ul {
+    padding-left: 20px;
+}
+
+.accordion-body ul li {
+    margin-bottom: 5px;
+}
+
+.btn-primary {
+    background-color: #6a11cb;
+    border-color: #6a11cb;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}

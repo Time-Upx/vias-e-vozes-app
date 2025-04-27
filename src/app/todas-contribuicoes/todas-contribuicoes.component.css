@@ -28,22 +28,22 @@ img {
 
 span {
     font-size: 0.9rem;
-    /* Ajuste para o texto "Nome completo, idade" */
 }
 
 strong {
     font-size: 1rem;
-    /* Destaque para o título */
 }
 
 .bi-arrow-right {
     font-size: 1.2rem;
-    /* Ajuste de tamanho para destacar a seta */
     color: #6c757d;
-    /* Cor padrão */
 }
 
 .list-group-item:hover .bi-arrow-right {
     color: white;
-    /* Cor da seta ao passar o mouse */
+}
+
+.text-muted {
+    font-size: 0.9rem;
+    color: #6c757d;
 }
