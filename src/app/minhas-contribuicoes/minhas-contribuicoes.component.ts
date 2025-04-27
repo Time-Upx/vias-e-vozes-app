@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class MinhasContribuicoesComponent implements OnInit {
   searchQuery: string = '';
   currentPage: number = 1;
-  itemsPerPage: number = 2; // Quantidade de contribuições por página
+  itemsPerPage: number = 4; // Quantidade de contribuições por página
   paginatedContributions: any[] = [];
   totalPages: number = 0;
   pages: number[] = [];
@@ -20,7 +20,9 @@ export class MinhasContribuicoesComponent implements OnInit {
   contributions: any[] = [
     { title: 'Contribuição 1', description: 'Descrição da contribuição 1', image: "https://placehold.co/300x300" },
     { title: 'Contribuição 2', description: 'Descrição da contribuição 2', image: "https://placehold.co/300x300" },
-    { title: 'Contribuição 3', description: 'Descrição da contribuição 3', image: "https://placehold.co/300x300" }
+    { title: 'Contribuição 3', description: 'Descrição da contribuição 3', image: "https://placehold.co/300x300" },
+    { title: 'Contribuição 4', description: 'Descrição da contribuição 4', image: "https://placehold.co/300x300" },
+    { title: 'Contribuição 5', description: 'Descrição da contribuição 5', image: "https://placehold.co/300x300" }
   ];
 
   constructor(private router: Router) { }

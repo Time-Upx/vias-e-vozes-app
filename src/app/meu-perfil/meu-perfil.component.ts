@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class MeuPerfilComponent {
   profileData = {
-    profileImage: "assets/ImagemPerfil_Placeholder.jpg", // URL ou base64 da imagem de perfil
+    profileImage: "", // URL ou base64 da imagem de perfil
     fullName: '',
     displayName: '',
     age: null,
