@@ -6,44 +6,71 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-meu-perfil',
   imports: [CommonModule, FormsModule],
   templateUrl: './meu-perfil.component.html',
-  styleUrl: './meu-perfil.component.css'
+  styleUrls: ['./meu-perfil.component.css']
 })
 export class MeuPerfilComponent {
   profileData = {
-    profileImage: "", // URL ou base64 da imagem de perfil
+    profileImage: "", // URL ou base64
     fullName: '',
     displayName: '',
-    age: null,
-    address: '',
-    publishedContributions: 0, // Exemplo inicial
-    savedContributions: 0 // Exemplo inicial
+    role: 'Contribuidor', // Valor estático
+    birthDate: '',
+    email: '',
+    isAnonymous: false,
+    publishedContributions: 0,
+    savedContributions: 0
   };
 
-  isModified: boolean = false; // Controla se há modificações no perfil
+  passwordData = {
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  };
 
-  // Manipula o upload de imagem
+  isModified: boolean = false;
+  showPasswordReset: boolean = false;
+
+  // Manipula upload de imagem
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input?.files && input.files.length > 0) {
-      const file = input.files[0];
       const reader = new FileReader();
       reader.onload = () => {
         this.profileData.profileImage = reader.result as string;
         this.markAsModified();
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(input.files[0]);
     }
   }
 
-  // Marca o perfil como modificado
+  // Marca o formulário como modificado
   markAsModified(): void {
     this.isModified = true;
   }
 
-  // Salva as alterações
+  // Salva as alterações do perfil
   saveProfile(): void {
     console.log('Dados do perfil salvos:', this.profileData);
     alert('Perfil salvo com sucesso!');
-    this.isModified = false; // Reseta o estado de modificado após salvar
+    this.isModified = false;
+  }
+
+  // Alterna a exibição dos campos de redefinição de senha
+  togglePasswordReset(): void {
+    this.showPasswordReset = !this.showPasswordReset;
+    if (!this.showPasswordReset) {
+      this.passwordData = { currentPassword: '', newPassword: '', confirmPassword: '' };
+    }
+  }
+
+  // Confirma a redefinição de senha
+  confirmPasswordReset(): void {
+    if (this.passwordData.newPassword !== this.passwordData.confirmPassword) {
+      alert('A nova senha e a confirmação não coincidem!');
+      return;
+    }
+    console.log('Senha redefinida com sucesso:', this.passwordData);
+    alert('Senha redefinida com sucesso!');
+    this.togglePasswordReset();
   }
 }
