@@ -16,27 +16,40 @@
         <p class="text-muted">Atualmente, não há contribuições registradas.</p>
     </div>
 
-    <!-- Lista de contribuições com ícones, imagem, data e título -->
+    <!-- Lista de contribuições resumida -->
     <div *ngIf="paginatedContributions.length > 0" class="row">
         <div class="col-12">
             <ul class="list-group mb-3">
                 <li *ngFor="let contribution of paginatedContributions"
-                    class="list-group-item d-flex align-items-center justify-content-between">
+                    class="list-group-item d-flex align-items-center justify-content-between"
+                    [routerLink]="['/detalhes-proposta', contribution.id]" style="cursor: pointer;">
                     <div class="d-flex align-items-start">
-                        <img [src]="contribution.image" alt="Imagem" class="rounded me-3"
-                            style="width: 50px; height: 50px;" />
+                        <img [src]="contribution.image || 'https://placehold.co/512x512'" alt="Imagem"
+                            class="rounded me-3" style="width: 50px; height: 50px;" />
                         <div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span><i class="bi bi-person me-1"></i> {{ contribution.name }}, {{ contribution.age }}
-                                    anos</span>
+                            <!-- Nome -->
+                            <div>
+                                <strong>{{ contribution.name }}</strong>
                             </div>
-                            <div class="mt-1">
-                                <strong>{{ contribution.title }}</strong>
+                            <!-- Tipo -->
+                            <div>
+                                <span><i class="bi bi-tag me-1"></i> {{ contribution.type | titlecase }}</span>
                             </div>
-                            <div class="text-muted">{{ contribution.date | date: 'shortDate' }}</div>
+                            <!-- Anônimo ou não -->
+                            <div>
+                                <span><i class="bi bi-shield me-1"></i>
+                                    {{ contribution.isAnonymous ? 'Anônimo' : 'Identificado' }}
+                                </span>
+                            </div>
+                            <!-- Cidade e Estado -->
+                            <div>
+                                <span><i class="bi bi-geo-alt me-1"></i>
+                                    {{ contribution.address.city }}, {{ contribution.address.state }}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <i class="bi bi-arrow-right"></i> <!-- Seta indicando que é clicável -->
+                    <i class="bi bi-arrow-right"></i> <!-- Ícone indicando que é clicável -->
                 </li>
             </ul>
         </div>

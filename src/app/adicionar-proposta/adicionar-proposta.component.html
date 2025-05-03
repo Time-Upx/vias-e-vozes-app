@@ -16,21 +16,21 @@
         <!-- Título -->
         <div class="mb-3">
             <label for="titulo" class="form-label"><i class="bi bi-fonts me-2"></i>Título</label>
-            <input type="text" class="form-control" id="titulo" name="titulo" ngModel required
+            <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="proposalData.name" required
                 placeholder="Informe o título da proposta" />
         </div>
 
         <!-- Descrição -->
         <div class="mb-3">
             <label for="descricao" class="form-label"><i class="bi bi-card-text me-2"></i>Descrição</label>
-            <textarea class="form-control" id="descricao" name="descricao" rows="4" ngModel required
-                placeholder="Descreva sua proposta"></textarea>
+            <textarea class="form-control" id="descricao" name="descricao" [(ngModel)]="proposalData.description"
+                rows="4" required placeholder="Descreva sua proposta"></textarea>
         </div>
 
         <!-- Tipo -->
         <div class="mb-3">
             <label for="tipo" class="form-label"><i class="bi bi-tag me-2"></i>Tipo</label>
-            <select class="form-select" id="tipo" name="tipo" [(ngModel)]="proposalData.tipo" required>
+            <select class="form-select" id="tipo" name="tipo" [(ngModel)]="proposalData.type" required>
                 <option value="melhoria" selected>Melhoria</option>
                 <option value="reclamacao">Reclamação</option>
             </select>
@@ -38,9 +38,59 @@
 
         <!-- Endereço -->
         <div class="mb-3">
-            <label for="endereco" class="form-label"><i class="bi bi-geo-alt me-2"></i>Endereço</label>
-            <textarea class="form-control" id="endereco" name="endereco" rows="3" ngModel required
-                placeholder="Informe o endereço relacionado à proposta"></textarea>
+            <label class="form-label"><i class="bi bi-geo-alt me-2"></i>Endereço</label>
+
+            <!-- Rua -->
+            <input type="text" class="form-control mb-2" id="street" name="street"
+                [(ngModel)]="proposalData.address.street" required placeholder="Rua" />
+
+            <!-- Número -->
+            <input type="text" class="form-control mb-2" id="number" name="number"
+                [(ngModel)]="proposalData.address.number" required placeholder="Número" />
+
+            <!-- Bairro -->
+            <input type="text" class="form-control mb-2" id="neighborhood" name="neighborhood"
+                [(ngModel)]="proposalData.address.neighborhood" required placeholder="Bairro" />
+
+            <!-- Cidade -->
+            <input type="text" class="form-control mb-2" id="city" name="city" [(ngModel)]="proposalData.address.city"
+                required placeholder="Cidade" />
+
+            <!-- Estado (Select) -->
+            <select class="form-select mb-2" id="state" name="state" [(ngModel)]="proposalData.address.state" required>
+                <option value="" disabled selected>Selecione o Estado</option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+            </select>
+
+            <!-- CEP -->
+            <input type="text" class="form-control" id="CEP" name="CEP" maxlength="9"
+                [(ngModel)]="proposalData.address.CEP" required placeholder="CEP" (input)="formatarCEP($event)" />
         </div>
 
         <!-- Links Relacionados -->
@@ -49,12 +99,20 @@
             <div>
                 <div *ngFor="let link of proposalData.links; let i = index; trackBy: trackByFn"
                     class="input-group mb-2">
-                    <input type="url" class="form-control" [(ngModel)]="proposalData.links[i]" name="link{{ i }}"
-                        placeholder="Informe um link relacionado" />
+                    <!-- Campo para o Título -->
+                    <input type="text" class="form-control me-2" [(ngModel)]="link.titulo" name="titulo{{ i }}"
+                        placeholder="Título do link" />
+
+                    <!-- Campo para URL -->
+                    <input type="url" class="form-control me-2" [(ngModel)]="link.url" name="url{{ i }}"
+                        placeholder="URL do link" />
+
+                    <!-- Botão para remover -->
                     <button type="button" class="btn btn-danger" (click)="removeLink(i)">
                         <i class="bi bi-trash"></i>
                     </button>
                 </div>
+                <!-- Botão para adicionar novo link -->
                 <button type="button" class="btn btn-secondary mt-2" (click)="addLink()">
                     <i class="bi bi-plus-circle"></i> Adicionar Link
                 </button>
@@ -63,9 +121,10 @@
 
         <!-- Botões -->
         <div class="d-flex justify-content-end mt-3">
-            <button type="button" class="btn btn-secondary me-2" (click)="clearForm(proposalForm)"><i
-                    class="bi bi-arrow-counterclockwise"></i> Limpar</button>
-            <button type="submit" class="btn btn-primary" [disabled]="!proposalForm.valid"><i class="bi bi-send"></i>
+            <button type="button" class="btn btn-secondary me-2" (click)="clearForm(proposalForm)">
+                <i class="bi bi-arrow-counterclockwise"></i> Limpar</button>
+            <button type="button" class="btn btn-primary" (click)="onSubmit(proposalForm)">
+                <i class="bi bi-send"></i>
                 Enviar</button>
         </div>
     </form>

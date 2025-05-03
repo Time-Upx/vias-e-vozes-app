@@ -24,3 +24,19 @@ textarea {
 .btn:hover {
     opacity: 0.9;
 }
+
+button:disabled {
+    opacity: 0.6;
+    /* Torna o botão semi-transparente */
+    cursor: not-allowed;
+    /* Mostra um cursor de "não permitido" */
+}
+
+button:disabled.btn-primary {
+    background-color: #007bff;
+    /* Mantém a cor do botão */
+    border-color: #007bff;
+    /* Mantém a borda do botão */
+    color: white;
+    /* Mantém o texto visível */
+}

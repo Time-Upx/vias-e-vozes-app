@@ -6,6 +6,7 @@ import { DicasUtilizacaoComponent } from './dicas-utilizacao/dicas-utilizacao.co
 import { MeuPerfilComponent } from './meu-perfil/meu-perfil.component';
 import { MinhasContribuicoesComponent } from './minhas-contribuicoes/minhas-contribuicoes.component';
 import { TodasContribuicoesComponent } from './todas-contribuicoes/todas-contribuicoes.component';
+import { DetalhesPropostaComponent } from './detalhes-proposta/detalhes-proposta.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/inicio', pathMatch: 'full' },
@@ -16,5 +17,7 @@ export const routes: Routes = [
     { path: 'meu-perfil', component: MeuPerfilComponent },
     { path: 'minhas-contribuicoes', component: MinhasContribuicoesComponent },
     { path: 'todas-contribuicoes', component: TodasContribuicoesComponent },
+    { path: 'detalhes-proposta/:id', component: DetalhesPropostaComponent },
+
     { path: '**', redirectTo: '/inicio' }
 ];

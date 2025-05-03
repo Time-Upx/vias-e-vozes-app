@@ -1,34 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ApiService as ApiService_Propostas } from '../services/api-propostas.service';
+import { Contribuições } from '../interfaces/contribuições';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { Router, RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-todas-contribuicoes',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterLink],
+  providers: [ApiService_Propostas],
   templateUrl: './todas-contribuicoes.component.html',
   styleUrl: './todas-contribuicoes.component.css'
 })
 export class TodasContribuicoesComponent implements OnInit {
-  contributions = [
-    {
-      name: 'João Silva', age: 28, title: 'Contribuição de Projeto', image: "https://placehold.co/300x300"
-    },
-    {
-      name: 'Ana Martins', age: 34, title: 'Contribuição de Design', image: "https://placehold.co/300x300"
-    },
-    {
-      name: 'Carlos Andrade', age: 25, title: 'Contribuição de Desenvolvimento', image: "https://placehold.co/300x300"
-    },
-    {
-      name: 'Mariana Costa', age: 30, title: 'Contribuição de Teste', image: "https://placehold.co/300x300"
-    },
-    {
-      name: 'Lucas Almeida', age: 22, title: 'Contribuição de Documentação', image: "https://placehold.co/300x300"
-    },
-    {
-      name: 'Sofia Ferreira', age: 29, title: 'Contribuição de UX', image: "https://placehold.co/300x300"
-    }
-  ];
+  constructor(
+    private router: Router,
+    private ApiService_Propostas: ApiService_Propostas
+  ) { }
+  contributions: Contribuições[] = [];
 
   searchQuery: string = '';
   currentPage: number = 1;
@@ -38,12 +29,22 @@ export class TodasContribuicoesComponent implements OnInit {
   pages: number[] = [];
 
   ngOnInit(): void {
-    this.calculatePagination();
+    this.ApiService_Propostas.solicitarPropostas().subscribe(
+      {
+        next: (data: Contribuições[]) => {
+          this.contributions = data;
+          console.log('Contribuições recebidas:', this.contributions);
+          this.calculatePagination(this.contributions);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Erro ao obter as contribuições:', error);
+        }
+      }
+    );
   }
 
   filterContributions(): void {
     const filtered = this.contributions.filter((contribution) =>
-      contribution.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
       contribution.name.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
     this.calculatePagination(filtered);

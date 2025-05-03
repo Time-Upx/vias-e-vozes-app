@@ -1,0 +1,26 @@
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-radius: 10px 10px 0 0;
+}
+
+.btn-primary {
+    background-color: #6a11cb;
+    border-color: #6a11cb;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.pagination .page-link {
+    border-radius: 5px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #6a11cb;
+    border-color: #6a11cb;
+}
