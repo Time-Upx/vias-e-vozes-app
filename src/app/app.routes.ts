@@ -8,16 +8,22 @@ import { MinhasContribuicoesComponent } from './minhas-contribuicoes/minhas-cont
 import { TodasContribuicoesComponent } from './todas-contribuicoes/todas-contribuicoes.component';
 import { DetalhesPropostaComponent } from './detalhes-proposta/detalhes-proposta.component';
 
+import { AuthGuardService } from './services/auth-guard.service';
+import { CadastroComponent } from './cadastro/cadastro.component';
+import { LoginComponent } from './login/login.component';
+
 export const routes: Routes = [
     { path: '', redirectTo: '/inicio', pathMatch: 'full' },
     { path: 'inicio', component: InicioComponent },
-    { path: 'adicionar-proposta', component: AdicionarPropostaComponent },
-    { path: 'contribuicoes-salvas', component: ContribuicoesSalvasComponent },
+    { path: 'adicionar-proposta', component: AdicionarPropostaComponent, canActivate: [AuthGuardService] },
+    { path: 'contribuicoes-salvas', component: ContribuicoesSalvasComponent, canActivate: [AuthGuardService] },
     { path: 'dicas-utilizacao', component: DicasUtilizacaoComponent },
-    { path: 'meu-perfil', component: MeuPerfilComponent },
-    { path: 'minhas-contribuicoes', component: MinhasContribuicoesComponent },
+    { path: 'meu-perfil', component: MeuPerfilComponent, canActivate: [AuthGuardService] },
+    { path: 'minhas-contribuicoes', component: MinhasContribuicoesComponent, canActivate: [AuthGuardService] },
     { path: 'todas-contribuicoes', component: TodasContribuicoesComponent },
     { path: 'detalhes-proposta/:id', component: DetalhesPropostaComponent },
+    { path: 'cadastro', component: CadastroComponent },
+    { path: 'login', component: LoginComponent },
 
     { path: '**', redirectTo: '/inicio' }
 ];

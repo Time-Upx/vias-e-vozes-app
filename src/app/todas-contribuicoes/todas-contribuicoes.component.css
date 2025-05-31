@@ -1,3 +1,4 @@
+/* Geral */
 .list-group-item {
     border-radius: 5px;
     cursor: pointer;
@@ -6,17 +7,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: 0.3s;
+    position: relative;
 }
 
+/* Efeito hover */
 .list-group-item:hover {
-    background-color: #6a11cb;
-    color: white;
+    background-color: #dedede;
+
 }
 
+/* Imagens */
 img {
     border-radius: 5px;
 }
 
+/* Paginação */
 .pagination .page-link {
     border-radius: 5px;
 }
@@ -26,24 +32,160 @@ img {
     border-color: #6a11cb;
 }
 
-span {
+/* Tipografia */
+span,
+.text-muted {
     font-size: 0.9rem;
+    color: #6c757d;
 }
 
 strong {
     font-size: 1rem;
 }
 
+/* Ícone de seta */
 .bi-arrow-right {
     font-size: 1.2rem;
     color: #6c757d;
+    transition: 0.3s;
 }
 
 .list-group-item:hover .bi-arrow-right {
     color: white;
 }
 
-.text-muted {
-    font-size: 0.9rem;
+/* Card de Contribuição */
+.contribution-card {
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    position: relative;
+    display: flex;
+    justify-content: left;
+}
+
+.contribution-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Título da Contribuição */
+.contribution-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Badges */
+.badge {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 5px;
+    min-width: 150px;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Azul para melhoria */
+.badge-blue {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Laranja para reclamação */
+.badge-orange {
+    background-color: #fd7e14;
+    color: white;
+}
+
+/* Detalhes da Contribuição */
+.contribution-details {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.contribution-details strong {
+    font-weight: 600;
+    color: #222;
+}
+
+.arrow-container {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
     color: #6c757d;
+}
+
+/* Status */
+.status-label {
+    font-size: 0.95rem;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 5px;
+}
+
+/* Amarelo para "Em Análise" */
+.status-analysing {
+    background-color: #ffc107;
+    color: black;
+}
+
+.anonymous-card {
+    background: #f8f9fa;
+    border-left: 5px solid #dc3545;
+    /* Vermelho para destacar */
+}
+
+.anonymous-badge {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+/* Estilo para contribuições identificadas */
+.identified-card {
+    background: #ffffff;
+    border-left: 5px solid #007bff;
+}
+
+/* Filtro ativo */
+.active-filter {
+    background-color: #007bff !important;
+    color: white !important;
+    border-color: #007bff !important;
+    transition: 0.3s;
+}
+
+.contribution-image-container {
+    width: 80px;
+    height: 80px;
+}
+
+.small-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.contribution-info-container {
+    margin-left: 10px;
+
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 30%;
 }

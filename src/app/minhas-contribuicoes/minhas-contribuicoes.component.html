@@ -10,8 +10,11 @@
         </div>
     </div>
 
+    <!-- Erro ao carregar contribuições -->
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">{{ errorMessage }}</div>
+
     <!-- Tela quando não há contribuições -->
-    <div *ngIf="paginatedContributions.length === 0" class="text-center">
+    <div *ngIf="paginatedContributions.length === 0 && !errorMessage" class="text-center">
         <h3 class="mt-4">Nenhuma contribuição encontrada</h3>
         <p class="text-muted">Você ainda não adicionou nenhuma contribuição.</p>
         <button class="btn btn-primary mt-3" (click)="navigateToAddContribution()">
@@ -19,15 +22,19 @@
         </button>
     </div>
 
-    <!-- Lista de contribuições como cards -->
     <div *ngIf="paginatedContributions.length > 0" class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
         <div class="col" *ngFor="let contribution of paginatedContributions">
             <div class="card">
-                <img [src]="contribution.image" class="card-img-top" alt="Imagem da Contribuição">
+                <img [src]="contribution.imageUrl || 'assets/DefaultImage.png'" class="card-img-top"
+                    alt="Imagem da Contribuição">
                 <div class="card-body">
                     <h5 class="card-title">{{ contribution.title }}</h5>
                     <p class="card-text">{{ contribution.description }}</p>
-                    <a href="#" class="btn btn-primary"><i class="bi bi-eye"></i> Ver Detalhes</a>
+                    <p class="card-text"><i class="bi bi-clock-history"></i> {{ contribution.timeOfCreation |
+                        date:'dd/MM/yyyy HH:mm' }}</p>
+                    <button class="btn btn-primary btn-vermais" (click)="navigateToDetails(contribution.id)">
+                        <i class="bi bi-eye"></i> Ver Detalhes
+                    </button>
                 </div>
             </div>
         </div>
@@ -39,7 +46,7 @@
             <nav>
                 <ul class="pagination justify-content-center">
                     <li class="page-item" [class.disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
-                        <a class="page-link" tabindex="-1"><i class="bi bi-chevron-left"></i></a>
+                        <a class="page-link"><i class="bi bi-chevron-left"></i></a>
                     </li>
                     <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage"
                         (click)="changePage(page)">

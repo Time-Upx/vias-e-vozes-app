@@ -1,0 +1,156 @@
+.proposal-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.proposal-header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.proposal-badges {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.proposal-type {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 6px 12px;
+    min-width: 140px;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Azul para melhoria */
+.badge-blue {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Laranja para reclamação */
+.badge-orange {
+    background-color: #fd7e14;
+    color: white;
+}
+
+/* Cinza para Proposta anônima */
+.badge-gray {
+    background-color: #484848;
+    color: white;
+}
+
+.proposal-image {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.proposal-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.info-item {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.info-item h4 {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.proposal-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.proposal-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.proposal-link:hover {
+    text-decoration: underline;
+}
+
+.status-label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+/* Amarelo para "Em Análise" */
+.status-analysing {
+    background-color: #ffc107;
+    color: black;
+}
+
+.proposal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.description-section {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.description-section h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.comments-section {
+    margin-top: 20px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.comment-actions button {
+    font-size: 0.9rem;
+}
+
+.anonymous-text {
+    font-weight: bold;
+    color: #dc3545;
+    font-style: italic;
+}
+
+.profile-image {
+    width: 1.2em;
+    /* Ajusta para manter o tamanho da fonte */
+    height: 1.2em;
+    object-fit: cover;
+    margin-bottom: 2px;
+    /* Pequeno ajuste para alinhar com o texto */
+}
+
+.profile-name {
+    font-size: 1em;
+    /* Mantém alinhado com o tamanho do texto */
+    font-weight: bold;
+}

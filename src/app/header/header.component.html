@@ -1,8 +1,29 @@
 <header class="d-flex align-items-center justify-content-between p-3 bg-primary text-white shadow-sm">
-    <img src="assets/ProjectIcon.png" alt="Project Logo" class="img-fluid" style="height: 50px;">
-    <h1 class="m-0">Vias e Vozes</h1>
-    <div class="d-flex gap-3">
-        <button class="btn btn-light text-primary">Cadastre-se</button>
-        <button class="btn btn-outline-light">Login</button>
+    <img src="assets/ProjectIcon.png" alt="Project Logo" class="img-fluid inicio" style="height: 50px;"
+        (click)="redirecionarParaInicio()">
+    <h1 class="m-0 inicio" (click)="redirecionarParaInicio()">Vias e Vozes</h1>
+
+    <div *ngIf="usuarioLogado; else authLinks" class="d-flex align-items-center gap-3">
+        <div class="user-menu">
+            <div class="dropdown">
+                <div class="d-flex align-items-center menu-trigger" data-bs-toggle="dropdown">
+                    <img [src]="profileImageSrc" alt="Imagem de Perfil" class="rounded-circle menu-trigger-image"
+                        style="width: 40px; height: 40px;">
+                    <span class="ms-2 menu-trigger-name">{{ usuarioDetalhado?.name }}</span>
+                </div>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item inicio" (click)="redirecionarParaMeuPerfil()">Meu Perfil</a></li>
+                    <li><a class="dropdown-item inicio text-danger" (click)="logout()">Logout</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+    <ng-template #authLinks>
+        <div class="d-flex gap-3">
+            <a routerLink="/cadastro" class="btn btn-light text-primary">Cadastre-se</a>
+            <a routerLink="/login" class="btn btn-outline-light">Login</a>
+        </div>
+    </ng-template>
 </header>

@@ -2,23 +2,66 @@
     <h2 class="mb-4"><i class="bi bi-lightbulb me-2"></i>Dicas de Utilização</h2>
 
     <div class="accordion" id="tipsAccordion">
+        <!-- Login -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingLogin">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLogin"
+                    aria-expanded="true" aria-controls="collapseLogin">
+                    Login
+                </button>
+            </h2>
+            <div id="collapseLogin" class="accordion-collapse collapse show" aria-labelledby="headingLogin"
+                data-bs-parent="#tipsAccordion">
+                <div class="accordion-body">
+                    <p>Para acessar sua conta:</p>
+                    <ul>
+                        <li>Insira seu e-mail e senha cadastrados.</li>
+                        <li>Clique em <strong>Login</strong> para acessar suas contribuições salvas e publicadas.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cadastro -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingCadastro">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseCadastro" aria-expanded="false" aria-controls="collapseCadastro">
+                    Cadastro
+                </button>
+            </h2>
+            <div id="collapseCadastro" class="accordion-collapse collapse" aria-labelledby="headingCadastro"
+                data-bs-parent="#tipsAccordion">
+                <div class="accordion-body">
+                    <p>Para criar uma conta:</p>
+                    <ul>
+                        <li>Insira seu nome completo e e-mail.</li>
+                        <li>Escolha uma senha segura.</li>
+                        <li>Clique em <strong>Cadastre-se</strong> e aguarde a confirmação.</li>
+                        <li>Após o cadastro, você poderá enviar contribuições e interagir com outras propostas.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!-- Adicionar Proposta -->
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                     Adicionar Proposta
                 </button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                 data-bs-parent="#tipsAccordion">
                 <div class="accordion-body">
                     <p>Para adicionar uma proposta:</p>
                     <ul>
                         <li>Preencha seu nome completo e idade.</li>
                         <li>Forneça um título claro e uma descrição detalhada do problema.</li>
-                        <li>Opcionalmente, insira uma imagem que ajude a ilustrar a proposta.</li>
-                        <li>Revise as informações e clique em <strong>Enviar</strong>.</li>
+                        <li>Opcionalmente, insira uma imagem.</li>
+                        <li>Após enviar, sua proposta poderá ser curtida, favoritada e comentada por outros usuários.
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -37,10 +80,11 @@
                 <div class="accordion-body">
                     <p>Na seção "Minhas Contribuições", você pode:</p>
                     <ul>
-                        <li>Visualizar suas propostas enviadas.</li>
-                        <li>Filtrar suas contribuições utilizando a barra de pesquisa.</li>
-                        <li>Editar ou excluir suas contribuições existentes.</li>
-                        <li>Utilizar a paginação para navegar pelas suas propostas.</li>
+                        <li>Visualizar todas as suas contribuições enviadas.</li>
+                        <li>Filtrar suas contribuições pela barra de pesquisa.</li>
+                        <li>Editar uma proposta existente.</li>
+                        <li>Excluir uma proposta caso você seja o autor.</li>
+                        <li>Acompanhar a quantidade de curtidas e comentários que sua proposta recebeu.</li>
                     </ul>
                 </div>
             </div>
@@ -59,9 +103,10 @@
                 <div class="accordion-body">
                     <p>Esta seção permite:</p>
                     <ul>
-                        <li>Visualizar e acessar contribuições que você marcou como favoritas ou importantes.</li>
-                        <li>Utilizar a barra de pesquisa para encontrar rapidamente uma contribuição salva.</li>
-                        <li>Remover uma contribuição da lista de salvas, caso necessário.</li>
+                        <li>Acompanhar contribuições que você marcou como favoritas.</li>
+                        <li>Filtrar contribuições salvas utilizando a barra de pesquisa.</li>
+                        <li>Remover uma contribuição da lista de favoritas.</li>
+                        <li>Acessar os detalhes completos da contribuição salva.</li>
                     </ul>
                 </div>
             </div>
@@ -80,9 +125,10 @@
                 <div class="accordion-body">
                     <p>No seu perfil, você pode:</p>
                     <ul>
-                        <li>Atualizar suas informações pessoais, como nome e idade.</li>
+                        <li>Atualizar suas informações pessoais, como nome e imagem de perfil.</li>
                         <li>Gerenciar preferências e configurações da sua conta.</li>
                         <li>Visualizar estatísticas das suas contribuições e atividades.</li>
+                        <li>Acompanhar a quantidade de curtidas e comentários nas suas propostas.</li>
                     </ul>
                 </div>
             </div>

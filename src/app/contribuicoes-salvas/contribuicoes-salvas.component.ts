@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiService as ApiService_Usuarios } from '../services/api-usuarios.service';
+import { ApiService as ApiService_Propostas } from '../services/api-propostas.service';
+import { Contribution_OnRequest, PageableContribution } from '../interfaces/contribuicoes';
 
 @Component({
   selector: 'app-contribuicoes-salvas',
@@ -12,27 +15,66 @@ import { Router } from '@angular/router';
 export class ContribuicoesSalvasComponent implements OnInit {
   searchQuery: string = '';
   currentPage: number = 1;
-  itemsPerPage: number = 4; // Quantidade de contribuições por página
-  paginatedContributions: any[] = [];
+  itemsPerPage: number = 10;
+  paginatedContributions: Contribution_OnRequest[] = [];
   totalPages: number = 0;
   pages: number[] = [];
+  contributions: Contribution_OnRequest[] = [];
+  usuarioLogadoId: number | null = null;
+  errorMessage = '';
 
-  contributions: any[] = [
-    { title: 'Contribuição 1', description: 'Descrição da contribuição 1', image: "https://placehold.co/300x300" },
-    { title: 'Contribuição 2', description: 'Descrição da contribuição 2', image: "https://placehold.co/300x300" },
-    { title: 'Contribuição 3', description: 'Descrição da contribuição 3', image: "https://placehold.co/300x300" },
-    { title: 'Contribuição 4', description: 'Descrição da contribuição 4', image: "https://placehold.co/300x300" },
-    { title: 'Contribuição 5', description: 'Descrição da contribuição 5', image: "https://placehold.co/300x300" }
-  ];
-
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private ApiService_Usuarios: ApiService_Usuarios,
+    private ApiService_Propostas: ApiService_Propostas
+  ) { }
 
   ngOnInit(): void {
+    const usuarioLogadoString = localStorage.getItem('usuarioLogado');
+    if (usuarioLogadoString) {
+      const usuarioLogado = JSON.parse(usuarioLogadoString);
+      this.usuarioLogadoId = usuarioLogado.id;
+      this.buscarContribuicoesFavoritas();
+    } else {
+      this.errorMessage = '⚠️ Você precisa estar logado para ver suas contribuições salvas.';
+    }
+  }
+
+  buscarContribuicoesFavoritas(): void {
+    if (!this.usuarioLogadoId) return;
+
+    this.ApiService_Usuarios.listarContribuicoesFavoritas(this.usuarioLogadoId).subscribe({
+      next: (data: PageableContribution) => {
+        this.contributions = data.content;
+        this.carregarDetalhesDasContribuicoes();
+      },
+      error: () => this.errorMessage = 'Erro ao carregar contribuições salvas.'
+    });
+  }
+
+  carregarDetalhesDasContribuicoes(): void {
+    this.contributions.forEach(contribuicao => this.carregarDetalhesContribuicao(contribuicao));
     this.calculatePagination();
   }
 
+  carregarDetalhesContribuicao(contribuicao: Contribution_OnRequest) {
+    this.ApiService_Propostas.listarDetalhesContribuicao(contribuicao.id).subscribe({
+      next: (detalhes) => {
+        contribuicao.imageUrl = detalhes.image?.content
+          ? `data:image/${detalhes.image.extension};base64,${detalhes.image.content}`
+          : 'assets/DefaultImage.png';
+
+        contribuicao.description = detalhes.description; // Adiciona a descrição
+      },
+      error: () => {
+        contribuicao.imageUrl = 'assets/DefaultImage.png';
+        contribuicao.description = 'Descrição não disponível.';
+      }
+    });
+  }
+
   filterContributions(): void {
-    const filtered = this.contributions.filter((contribution) =>
+    const filtered = this.contributions.filter(contribution =>
       contribution.title.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
     this.calculatePagination(filtered);
@@ -53,7 +95,7 @@ export class ContribuicoesSalvasComponent implements OnInit {
     this.calculatePagination();
   }
 
-  navigateToAddContribution(): void {
-    this.router.navigate(['/adicionar-proposta']);
+  navigateToDetails(contribId: number): void {
+    this.router.navigate(['/detalhes-proposta', contribId]);
   }
 }

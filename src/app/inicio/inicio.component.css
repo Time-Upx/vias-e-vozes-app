@@ -16,14 +16,23 @@
     opacity: 0.9;
 }
 
-.carousel-item,
-.carousel-inner {
+.carousel {
+    height: 50vh;
+    /* Define um tamanho fixo para o carrossel */
+}
+
+.carousel-inner,
+.carousel-item {
     height: 100%;
-    width: 100%;
+    /* Garante que os elementos internos ocupem todo o espaço */
 }
 
 .carousel-item img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    display: block;
+    /* Remove possíveis quebras de layout */
 }
 
 .carousel-indicators button {
@@ -36,4 +45,35 @@ h5 {
 
 p {
     color: #6c757d;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 350px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Move elementos para a parte inferior */
+}
+
+.card-text {
+    margin-bottom: 10px;
+    /* Espaço entre a data e o botão */
+}
+
+.btn-vermais {
+    margin-top: auto;
+    /* Empurra para o final */
 }

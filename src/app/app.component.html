@@ -1,10 +1,10 @@
 <div class="container-fluid p-0 m-0">
   <app-header></app-header>
   <div class="row p-0 m-0">
-    <div class="col-3 col-md-2">
+    <div *ngIf="!isAuthentication()" class="col-3 col-md-2">
       <app-menu-lateral></app-menu-lateral>
     </div>
-    <main class="col" style="margin-right: 50px">
+    <main [ngClass]="{ 'margin-left-50': !isAuthentication() }" class="col">
       <router-outlet></router-outlet>
     </main>
   </div>

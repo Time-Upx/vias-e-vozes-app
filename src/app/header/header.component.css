@@ -1,3 +1,33 @@
-header img {
-    height: 50px;
+.inicio:hover {
+    cursor: pointer;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.menu-trigger {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.menu-trigger:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.menu-trigger-image {
+    transition: transform 0.3s ease-in-out;
+}
+
+.menu-trigger:hover .menu-trigger-image {
+    transform: scale(1.1);
+}
+
+.menu-trigger-name {
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
 }

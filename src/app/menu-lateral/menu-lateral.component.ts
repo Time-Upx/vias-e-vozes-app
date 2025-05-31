@@ -8,5 +8,4 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './menu-lateral.component.css'
 })
 export class MenuLateralComponent {
-
 }

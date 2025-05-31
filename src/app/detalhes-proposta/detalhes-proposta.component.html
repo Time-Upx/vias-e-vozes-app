@@ -1,37 +1,180 @@
-<div class="container mt-4">
+<div class="container mt-5 proposal-container">
     <div *ngIf="loading" class="text-center">
-        <p>Carregando proposta...</p>
+        <p>🔄 Carregando proposta...</p>
     </div>
 
     <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
+        ❌ {{ errorMessage }}
     </div>
 
     <div *ngIf="proposta && !loading">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h2><i class="bi bi-file-earmark-text me-2"></i>{{ proposta.name }}</h2>
+        <!-- Cabeçalho da Proposta -->
+        <div class="proposal-header">
+            <h1><i class="bi bi-file-earmark-text me-2"></i>{{ proposta.title }}</h1>
+            <div class="proposal-badges">
+                <span
+                    [ngClass]="{'badge-blue': proposta.type === 'IMPROVEMENT', 'badge-orange': proposta.type === 'COMPLAINT'}"
+                    class="badge proposal-type">
+                    {{ getTranslatedType(proposta.type) }}
+                </span>
+                <span *ngIf="proposta.isAnonymous" class="badge proposal-type badge-gray">Proposta anônima</span>
             </div>
-            <div class="card-body">
-                <p><strong><i class="bi bi-tag me-1"></i> Tipo:</strong> {{ proposta.type | titlecase }}</p>
-                <p><strong><i class="bi bi-info-circle me-1"></i> Descrição:</strong> {{ proposta.description }}</p>
-                <p>
-                    <strong><i class="bi bi-geo-alt me-1"></i> Endereço:</strong>
-                    {{ proposta.address.street }}, {{ proposta.address.number }} - {{ proposta.address.neighborhood }},
-                    {{ proposta.address.city }} - {{ proposta.address.state }} ({{ proposta.address.CEP }})
-                </p>
-                <p>
-                    <strong><i class="bi bi-link me-1"></i> Links úteis: </strong>
-                    <span *ngFor="let link of proposta.links">
-                        <a [href]="link.url" target="_blank">{{ link.titulo }}</a>
-                    </span>
-                </p>
+        </div>
+
+        <!-- Imagem da Proposta -->
+        <div *ngIf="proposta.image?.content" class="text-center mt-3">
+            <img [src]="'data:image/' + proposta.image.extension + ';base64,' + proposta.image.content"
+                [alt]="proposta.image.placeholder" class="img-fluid proposal-image">
+        </div>
+
+        <!-- Campo para trocar a imagem da contribuição -->
+        <div *ngIf="usuarioLogadoId === proposta.author.id" class="image-update-section mt-3">
+            <h4><i class="bi bi-image me-2"></i>Atualizar Imagem</h4>
+            <input type="file" class="form-control" (change)="onFileSelected($event)">
+            <button class="btn btn-success mt-2" [disabled]="!selectedFile" (click)="atualizarImagemContribuicao()">
+                Atualizar Imagem
+            </button>
+        </div>
+
+        <!-- Descrição -->
+        <div class="proposal-section description-section">
+            <h3><i class="bi bi-info-circle me-2"></i>Descrição</h3>
+            <p>{{ proposta.description }}</p>
+        </div>
+
+
+        <!-- Informações agrupadas em pares -->
+        <div class="proposal-info-grid">
+            <div class="info-item">
+                <h4><i class="bi bi-geo-alt me-2"></i>Endereço</h4>
+                <p>{{ proposta.address.street }}, {{ proposta.address.number }} - {{ proposta.address.neighborhood }},
+                    {{ proposta.address.city }} - {{ proposta.address.state }} ({{ proposta.address.cep }})</p>
             </div>
-            <div class="card-footer text-end">
-                <button class="btn btn-secondary" (click)="voltar()">
-                    <i class="bi bi-arrow-left"></i> Voltar
-                </button>
+            <div class="info-item">
+                <h4><i class="bi bi-heart-fill text-danger me-2"></i>Curtidas</h4>
+                <p>{{ proposta.quantityOfLikes }}</p>
             </div>
+
+            <div class="info-item">
+                <h4><i class="bi bi-clock-history me-2"></i>Data de Criação</h4>
+                <p>{{ proposta.timeOfCreation | date:'dd/MM/yyyy HH:mm' }}</p>
+            </div>
+
+            <!-- Autor da Proposta -->
+            <div class="info-item">
+                <h4><i class="bi bi-person-fill me-2"></i>Autor</h4>
+                <p *ngIf="!proposta.isAnonymous">{{ proposta.author.name }}</p>
+                <p *ngIf="proposta.isAnonymous" class="anonymous-text">🔒 Proposta Anônima</p>
+            </div>
+        </div>
+
+        <!-- Botões de ação -->
+        <div class="proposal-actions">
+            <button *ngIf="usuarioLogadoId" class="btn btn-sm me-2 mt-2"
+                [ngClass]="isLikedContribuicao() ? 'btn-primary' : 'btn-outline-primary'"
+                (click)="alternarCurtidaContribuicao()">
+                <i [ngClass]="isLikedContribuicao() ? 'bi bi-heart-fill' : 'bi bi-heart'"></i> {{
+                proposta.quantityOfLikes }}
+            </button>
+
+            <button *ngIf="usuarioLogadoId" class="btn btn-sm mt-2 me-2"
+                [ngClass]="isFavoritaContribuicao() ? 'btn-warning' : 'btn-outline-warning'"
+                (click)="alternarFavoritoContribuicao()">
+                <i [ngClass]="isFavoritaContribuicao() ? 'bi bi-star-fill' : 'bi bi-star'"></i>
+                {{ isFavoritaContribuicao() ? 'Favoritado' : 'Favoritar' }}
+            </button>
+
+            <!-- Botão para excluir a contribuição -->
+            <button *ngIf="usuarioLogadoId === proposta.author.id" class="btn btn-sm btn-danger mt-2"
+                (click)="confirmarExclusao(proposta.id)">
+                <i class="bi bi-trash"></i> Excluir Contribuição
+            </button>
+
+        </div>
+
+        <!-- Links Úteis (Centralizado) -->
+        <div class="proposal-links">
+            <h4><i class="bi bi-link me-2"></i>Links Úteis</h4>
+            <p>
+                <span *ngIf="proposta.links.length > 0">
+                    <a [href]="proposta.links[0].url" target="_blank" class="proposal-link">{{
+                        proposta.links[0].display }}</a>
+                </span>
+            </p>
+        </div>
+
+        <div class="container mt-4">
+            <div class="comments-section">
+                <h3>Comentários</h3>
+
+                <!-- Campo de novo comentário -->
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Escreva um comentário..."
+                        [(ngModel)]="novoComentario">
+                    <button class="btn btn-primary" (click)="adicionarComentario()">Enviar</button>
+                </div>
+
+                <div *ngIf="loadingComentarios">Carregando comentários...</div>
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+                <ul class="list-group">
+                    <li *ngFor="let comentario of comentarios"
+                        class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <div>
+                                <img [src]="profileImages[comentario.author.id] || 'assets/DefaultProfileImage.png'"
+                                    alt="Imagem de perfil" class="profile-image rounded-circle me-2">
+                                <strong>{{ comentario.author.name }}</strong>
+                            </div>
+                            <p *ngIf="!comentario.editando">{{ comentario.body }}</p>
+                            <input *ngIf="comentario.editando" type="text" [(ngModel)]="comentario.novoTexto"
+                                class="form-control">
+                            <small class="text-muted">🗓 {{ comentario.timeOfComment | date:'dd/MM/yyyy HH:mm'
+                                }}</small>
+                        </div>
+
+                        <!-- Botões de ação -->
+                        <div class="comment-actions">
+                            <button *ngIf="comentario.author.id === usuarioLogadoId"
+                                class="btn btn-sm btn-outline-danger" (click)="deletarComentario(comentario.id)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+
+                            <button *ngIf="podeEditarComentario(comentario) && comentario.author.id === usuarioLogadoId"
+                                class="btn btn-sm btn-outline-warning" (click)="comentario.editando = true">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+                            <button *ngIf="comentario.editando" class="btn btn-sm btn-success"
+                                (click)="editarComentario(comentario, comentario.novoTexto)">
+                                Salvar
+                            </button>
+                            <button *ngIf="comentario.editando" class="btn btn-sm btn-secondary"
+                                (click)="cancelarEdicao(comentario)">
+                                Cancelar
+                            </button>
+
+                            <button class="btn btn-sm"
+                                [ngClass]="isLiked(comentario.id) ? 'btn-primary' : 'btn-outline-primary'"
+                                (click)="alternarCurtida(comentario.id)">
+                                <i [ngClass]="isLiked(comentario.id) ? 'bi bi-heart-fill' : 'bi bi-heart'"></i> {{
+                                comentario.quantityOfLikes }}
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Status da Proposta -->
+        <div class="proposal-footer">
+            <span [ngClass]="{'status-analysing': proposta.status === 'ANALYSING'}" class="status-label mb-2">
+                <i class="bi bi-search"></i> {{ getTranslatedStatus(proposta.status) }}
+            </span>
+
+            <button class="btn btn-secondary mb-2" (click)="voltar()">
+                <i class="bi bi-arrow-left"></i> Voltar
+            </button>
         </div>
     </div>
 </div>

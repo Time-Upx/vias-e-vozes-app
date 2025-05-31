@@ -1,0 +1,16 @@
+.card {
+    background-color: #f8f9fa;
+}
+
+.card h2 {
+    color: #343a40;
+}
+
+.card a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
